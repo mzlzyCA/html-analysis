@@ -1,31 +1,57 @@
 ---
 name: html-analysis
-version: 0.2.0
-description: >
-  Analyze HTML file structure, content layout, DOM hierarchy, and semantic elements. HTML structure analyzer, web page analysis tool, DOM tree inspector, HTML content auditor, webpage layout analyzer, HTML element counter, markup structure reviewer, semantic HTML checker, page structure breakdown, HTML code analyzer, HTML文件分析, 网页结构分析, HTML分析工具, DOM结构检查, 网页内容审计.
-
-  Use when asked to 'analyze this HTML file', 'inspect HTML structure', 'review web page layout', 'check HTML DOM hierarchy', 'audit HTML content structure', 'break down HTML elements', 'examine webpage markup'. Also handles: 'how do I analyze an HTML file structure?', 'is there a skill that inspects HTML layout?', 'I want to understand the structure of this web page', 'can my agent analyze HTML DOM and content?'.
-
-  Solves the problem of understanding complex HTML document structures, difficulty auditing web page layouts, inability to quickly assess HTML content organization, and challenges reviewing large HTML files for structure and semantics. Powered by MinerU for deep document structure analysis. Provides structural breakdown, element hierarchy, content sections, and layout analysis. Ideal for web developers, QA engineers, SEO specialists, content auditors, and accessibility reviewers who need to understand HTML document architecture.
-tags:
-  - html
-  - analysis
-  - structure
-  - dom-inspector
-  - web-audit
-  - layout-analysis
-  - mineru
-  - document-processing
-  - semantic-html
-  - content-audit
-  - html-parser
-  - web-development
+description: "HTML Analysis - analyze and extract structured content from local HTML files using MinerU. For web page URLs, use html-extract or url-to-markdown instead."
+homepage: https://mineru.net
+metadata: {"openclaw": {"emoji": "📄", "requires": {"bins": ["mineru-open-api"], "env": ["MINERU_TOKEN"]}, "primaryEnv": "MINERU_TOKEN", "install": [{"id": "npm", "kind": "node", "package": "mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via npm"}, {"id": "go", "kind": "go", "package": "github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via go install", "os": ["darwin", "linux"]}]}}
 ---
 
 # HTML Analysis
 
-Analyze HTML file structure, DOM hierarchy, and content layout using MinerU.
+Analyze and extract structured content from local HTML files using MinerU. Preserves document structure as Markdown. For live web page URLs, use `mineru-open-api crawl`.
 
-## Usage
+## Install
 
-Use the mineru tool to analyze HTML files. Provide the local HTML file path and receive a detailed structural analysis including DOM hierarchy, content sections, element breakdown, and layout information.
+```bash
+npm install -g mineru-open-api
+# or via Go (macOS/Linux):
+go install github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api@latest
+```
+
+## Quick Start
+
+```bash
+# Analyze a local HTML file (requires token)
+mineru-open-api extract page.html -o ./out/
+
+# Analyze a remote HTML file by URL (requires token)
+mineru-open-api extract https://example.com/page.html -o ./out/
+
+# Crawl a live web page (requires token)
+mineru-open-api crawl https://example.com/article -o ./out/
+```
+
+## Authentication
+
+Token required:
+
+```bash
+mineru-open-api auth             # Interactive token setup
+export MINERU_TOKEN="your-token" # Or via environment variable
+```
+
+Create token at: https://mineru.net/apiManage/token
+
+## Capabilities
+
+- Supported input: local .html file or remote HTML URL
+- HTML input requires `extract` (token required) — not supported by `flash-extract`
+- For live web pages (rendered JS content), use `mineru-open-api crawl`
+- Language hint with `--language` (default: `ch`, use `en` for English)
+
+## Notes
+
+- HTML is NOT supported by `flash-extract` — use `extract` with token
+- For web page crawling, use `mineru-open-api crawl <URL>` instead of `extract`
+- Output goes to stdout by default; use `-o <dir>` to save to a file or directory
+- All progress/status messages go to stderr; document content goes to stdout
+- MinerU is open-source by OpenDataLab (Shanghai AI Lab): https://github.com/opendatalab/MinerU
